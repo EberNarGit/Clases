@@ -1,4 +1,5 @@
 import 'package:aplicacion2/components/background.dart';
+import 'package:aplicacion2/pages/Registro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -156,6 +157,8 @@ class _LoginPageState extends State<LoginPage> {
                 child: GestureDetector(
                   onTap: () {
                     print("Click en registrar!");
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Registro()));
                   },
                   child: Text(
                     "¿No tienes una cuenta?, Registrate...",

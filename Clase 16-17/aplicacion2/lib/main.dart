@@ -1,3 +1,4 @@
+import 'package:aplicacion2/pages/Registro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,19 +15,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: Colors.transparent
-    ));
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent));
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
+        overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
     return MaterialApp(
-      title: 'Aplicación Flutter 2',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Color(0xFF2661FA),
-        scaffoldBackgroundColor: Colors.white,
-        visualDensity: VisualDensity.adaptivePlatformDensity
-      ),
-      home: LoginPage()
-    );
+        title: 'Aplicación Flutter 2',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            primaryColor: Color(0xFF2661FA),
+            scaffoldBackgroundColor: Colors.white,
+            visualDensity: VisualDensity.adaptivePlatformDensity),
+        home: LoginPage());
   }
 }
