@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:aplicacion2/components/background.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'login_page.dart';
 
 class Registro extends StatefulWidget {
   const Registro({Key? key}) : super(key: key);
@@ -15,6 +21,16 @@ class _RegistroState extends State<Registro> {
   String _contrasena = "";
   String _tempcontrasena = "";
   var _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // _populateFields();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +128,12 @@ class _RegistroState extends State<Registro> {
               alignment: Alignment.centerRight,
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    final SharedPreferences p =
+                        await SharedPreferences.getInstance();
+                    p.setString('Nombre', _nombre);
+                    p.setString('Usuario', _usuario);
+                    p.setString('contaseña', _contrasena);
                     final form = _formKey.currentState;
                     if (form!.validate()) {
                       //print("Valido");
@@ -175,7 +196,7 @@ class _RegistroState extends State<Registro> {
                           Color.fromARGB(255, 255, 177, 41)
                         ])),
                     child: Text(
-                      "Entrar",
+                      "Registrar",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -184,6 +205,23 @@ class _RegistroState extends State<Registro> {
                     ),
                   )),
             ),
+            Container(
+              alignment: Alignment.centerRight,
+              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
+                },
+                child: Text(
+                  "¿Ya tienes cuenta? ",
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2661FA)),
+                ),
+              ),
+            )
           ]),
         ),
       ),

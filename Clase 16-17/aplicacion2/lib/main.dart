@@ -1,7 +1,7 @@
 import 'package:aplicacion2/pages/Registro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:aplicacion2/pages/home.dart';
 import 'pages/login_page.dart';
 
 void main() {

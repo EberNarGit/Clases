@@ -1,4 +1,5 @@
 import 'package:aplicacion2/components/background.dart';
+import 'package:aplicacion2/pages/home.dart';
 import 'package:aplicacion2/pages/Registro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:aplicacion2/pages/description_place.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -17,15 +19,26 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String _usuario = "";
   String _contrasena = "";
+  String u = "";
+  String c = "";
   var _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+    _datos();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+  }
+
+  _datos() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      u = prefs.getString('usuario').toString();
+      c = prefs.getString('contraseña').toString();
+    });
   }
 
   @override
@@ -98,9 +111,28 @@ class _LoginPageState extends State<LoginPage> {
                       if (form!.validate()) {
                         //print("Valido");
                         form.save();
-                        if (_usuario == "alejandro" &&
-                            _contrasena == "123456") {
+                        if (_usuario == u && _contrasena == c) {
                           //Mandar a HOME
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.green,
+                            content: Row(
+                              children: [
+                                Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 22,
+                                ),
+                                Expanded(
+                                  child: Text("Regreso al login"),
+                                )
+                              ],
+                            ),
+                            duration: Duration(seconds: 2),
+                          ));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => Home()));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             backgroundColor: Colors.red,
