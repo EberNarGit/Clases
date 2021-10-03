@@ -86,7 +86,7 @@ class _RegistroState extends State<Registro> {
                   validator: (value) => value.toString().isEmpty
                       ? "Contraseña obligatoria"
                       : null,
-                  onSaved: (value) => this._correo = value.toString(),
+                  onSaved: (value) => this._contrasena = value.toString(),
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock), labelText: "Contraseña"),
                 )),
@@ -98,13 +98,92 @@ class _RegistroState extends State<Registro> {
                 margin: EdgeInsets.symmetric(horizontal: 40),
                 child: TextFormField(
                   validator: (value) => value.toString().isEmpty
-                      ? "Contraseña no corresponde"
+                      ? "Contraseña obligatoria"
                       : null,
-                  onSaved: (value) => this._correo = value.toString(),
+                  onSaved: (value) => this._tempcontrasena = value.toString(),
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock),
-                      labelText: "Confirme su contraseña"),
+                      labelText: "Confirme contraseña"),
                 )),
+            SizedBox(
+              height: size.height * 0.05,
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              child: ElevatedButton(
+                  onPressed: () {
+                    final form = _formKey.currentState;
+                    if (form!.validate()) {
+                      //print("Valido");
+                      form.save();
+                      if (_tempcontrasena != _contrasena) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Row(
+                            children: [
+                              Icon(
+                                Icons.error,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: Text("La contraseña no coincide"),
+                              )
+                            ],
+                          ),
+                          duration: Duration(seconds: 2),
+                        ));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Row(
+                            children: [
+                              Icon(
+                                Icons.error,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: Text("Registro correcto"),
+                              )
+                            ],
+                          ),
+                          duration: Duration(seconds: 2),
+                        ));
+                        print("no válido");
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80)),
+                    padding: EdgeInsets.all(0),
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: size.width * 0.50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(80),
+                        gradient: LinearGradient(colors: [
+                          Color.fromARGB(255, 255, 136, 34),
+                          Color.fromARGB(255, 255, 177, 41)
+                        ])),
+                    child: Text(
+                      "Entrar",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 16),
+                    ),
+                  )),
+            ),
           ]),
         ),
       ),
